@@ -27,4 +27,25 @@ class ApiService {
       throw Exception('Failed to load data');
     }
   }
+
+  Future<Map<String, dynamic>> postReview(
+      String id, String name, String review) async {
+    final response = await client.post(
+      Uri.parse('$baseUrl/review'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'id': id,
+        'name': name,
+        'review': review,
+      }),
+    );
+    if (response.statusCode == 201) {
+      var data = json.decode(response.body);
+      return data;
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
 }

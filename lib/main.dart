@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:resto_app/common/styles.dart';
 import 'package:resto_app/data/db/preferences_helper.dart';
-import 'package:resto_app/ui/conversion_page.dart';
 import 'package:resto_app/ui/home_page.dart';
 import 'package:resto_app/ui/login_page.dart';
 import 'package:resto_app/ui/profile_page.dart';
 import 'package:resto_app/ui/register_page.dart';
 import 'package:resto_app/ui/resto/restaurant_list_page.dart';
-import 'package:resto_app/ui/sarankesan_page.dart';
+import 'package:resto_app/ui/resto/review_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,8 +45,6 @@ class MyApp extends StatelessWidget {
         LoginPage.routeName: (_) => const LoginPage(),
         RestaurantListPage.routeName: (_) => const RestaurantListPage(),
         RegisterPage.routeName: (_) => const RegisterPage(),
-        ConversionPage.routeName: (_) => const ConversionPage(),
-        SaranKesanPage.routeName: (_) => const SaranKesanPage(),
       },
     );
     // );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:resto_app/data/api/api_service.dart';
 import 'package:resto_app/data/enum/fetch_state.dart';
 import 'package:resto_app/data/model/restaurant_detail.dart';
+import 'package:resto_app/ui/resto/review_page.dart';
 import 'package:resto_app/widget/text_image.dart';
 
 class RestaurantDetailPage extends StatefulWidget {
@@ -158,37 +159,18 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                         .toList(),
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    'Reviews:',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: _restaurant.customerReviews
-                        .map(
-                          (review) => Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(review.name),
-                                const SizedBox(height: 4),
-                                Text(review.review),
-                                const SizedBox(height: 4),
-                                Text(
-                                  'Date: ${review.date}',
-                                  style: const TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                        .toList(),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ReviewRestaurantPage(
+                                    restaurantId: _restaurant.id,
+                                    customerReviews:
+                                        _restaurant.customerReviews,
+                                  )));
+                    },
+                    child: Text('Reviews', style: TextStyle(fontSize: 16)),
                   ),
                 ],
               ),

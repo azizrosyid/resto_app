@@ -34,4 +34,15 @@ class PreferencesHelper {
     final prefs = await sharedPreferences;
     prefs.clear();
   }
+
+  void setImageProfile(String path) {
+    sharedPreferences.then((prefs) {
+      prefs.setString('image_profile', path);
+    });
+  }
+
+  Future<String> getImageProfile() async {
+    final prefs = await sharedPreferences;
+    return prefs.getString('image_profile') ?? '';
+  }
 }

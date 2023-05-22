@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:resto_app/common/styles.dart';
-import 'package:resto_app/ui/conversion_page.dart';
 import 'package:resto_app/ui/profile_page.dart';
 import 'package:resto_app/ui/resto/restaurant_list_page.dart';
-import 'package:resto_app/ui/sarankesan_page.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home_page';
@@ -24,14 +22,6 @@ class _HomePageState extends State<HomePage> {
       label: 'Restoran',
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.change_circle_outlined),
-      label: 'Konversi',
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.feedback),
-      label: 'Saran & Kesan',
-    ),
-    BottomNavigationBarItem(
       icon: Icon(Icons.person),
       label: 'Profile',
     ),
@@ -45,8 +35,6 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _listWidget = [
     const RestaurantListPage(),
-    const ConversionPage(),
-    const SaranKesanPage(),
     const ProfilePage(),
   ];
 
