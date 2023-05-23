@@ -5,6 +5,34 @@ import 'package:resto_app/data/model/restaurant_detail.dart';
 import 'package:resto_app/ui/resto/review_page.dart';
 import 'package:resto_app/widget/text_image.dart';
 
+class Favorite {
+  static final Favorite _instance = Favorite._internal();
+
+  factory Favorite() {
+    return _instance;
+  }
+
+  Favorite._internal();
+
+  final Set<String> _favorites = <String>{};
+  Set<String> get favorites => _favorites;
+
+  void addFavorite(String id) {
+    _favorites.add(id);
+  }
+
+  void removeFavorite(String id) {
+    _favorites.remove(id);
+  }
+
+  bool isFavorite(String id) {
+    return _favorites.contains(id);
+  }
+
+  List<String> getFavorite() {
+    return _favorites.toList();
+  }
+}
 class RestaurantDetailPage extends StatefulWidget {
   final String restaurantId;
   const RestaurantDetailPage({super.key, required this.restaurantId});
@@ -19,6 +47,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
   final apiService = ApiService();
   late FetchState _state = FetchState.pending;
   late RestaurantDetail _restaurant;
+  bool _isFavorite = false;
 
   @override
   void initState() {
@@ -28,12 +57,14 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
   }
 
   void _fetchRestaurantDetail() async {
+    final isFavorite = Favorite().isFavorite(widget.restaurantId);
     try {
       final result = await apiService.getRestaurantDetail(widget.restaurantId);
       if (!mounted) return;
       setState(() {
         _state = FetchState.success;
         _restaurant = RestaurantDetail.fromJson(result);
+        _isFavorite = isFavorite;
       });
     } catch (e) {
       if (!mounted) return;
@@ -42,6 +73,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
       });
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +87,34 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
     if (_state == FetchState.success) {
       return AppBar(
         title: Text(_restaurant.name),
+        actions: [
+        IconButton(
+          onPressed: () {
+            setState(() {
+              _isFavorite = !_isFavorite;
+              if (_isFavorite) {
+                Favorite().addFavorite(_restaurant.id);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Berhasil menambahkan ke favorite'),
+                  ),
+                );
+              } else {
+                Favorite().removeFavorite(_restaurant.id);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Berhasil menghapus dari favorite'),
+                  ),
+                );
+              }
+            });
+          },
+          icon: Icon(
+            _isFavorite ? Icons.favorite : Icons.favorite_border,
+            color: Colors.red,
+          ),
+        ),
+      ],
       );
     }
     return AppBar(

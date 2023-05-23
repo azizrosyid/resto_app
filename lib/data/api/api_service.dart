@@ -48,4 +48,14 @@ class ApiService {
       throw Exception('Failed to load data');
     }
   }
+
+  Future<Map<String, dynamic>> searchRestaurant(String query) async {
+    final response = await client.get(Uri.parse('$baseUrl/search?q=$query'));
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      return data;
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
 }

@@ -16,6 +16,7 @@ dependencies:
   shared_preferences: ^2.1.1
   intl: ^0.18.1
   image_picker: ^0.8.7+5
+  anim_search_bar: ^2.0.3
 
 dev_dependencies:
   flutter_test:
